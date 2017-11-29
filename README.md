@@ -39,11 +39,11 @@ typedef void(^requestCallblock)(NSDictionary *responseObject, NSString *msg, NSE
 依赖AFNetworking YYCache  指定了AFNetworking YYCache最新版本，不需要单独pod。
 
 ```
-pod 'YMNetwork'
+pod 'YMHttpTool'
 ```
 ### Import
 ```objc
-#import "YMNetwork.h"
+#import "YMHttpTool.h"
 ```
 
 具体使用请查看demo YMNetworkHelper
