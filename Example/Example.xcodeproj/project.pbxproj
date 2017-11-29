@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		C20EE5F91FCE842600B0810C /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C20EE5F71FCE842600B0810C /* UIScrollView+EmptyDataSet.m */; };
 		C20EE5FC1FCE8DD700B0810C /* YMBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C20EE5FB1FCE8DD700B0810C /* YMBaseTableViewController.m */; };
+		C20EE6021FCEB22900B0810C /* YMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = C20EE5FE1FCEB22800B0810C /* YMNetwork.m */; };
+		C20EE6031FCEB22900B0810C /* YMNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C20EE5FF1FCEB22800B0810C /* YMNetworkCache.m */; };
 		C2611C551FCD8A370052DDD1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C541FCD8A370052DDD1 /* AppDelegate.m */; };
 		C2611C581FCD8A370052DDD1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C571FCD8A370052DDD1 /* ViewController.m */; };
 		C2611C5B1FCD8A370052DDD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2611C591FCD8A370052DDD1 /* Main.storyboard */; };
 		C2611C5D1FCD8A370052DDD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2611C5C1FCD8A370052DDD1 /* Assets.xcassets */; };
 		C2611C601FCD8A370052DDD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2611C5E1FCD8A370052DDD1 /* LaunchScreen.storyboard */; };
 		C2611C631FCD8A370052DDD1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C621FCD8A370052DDD1 /* main.m */; };
-		C2611C701FCD94F70052DDD1 /* YMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C6C1FCD94F70052DDD1 /* YMNetwork.m */; };
-		C2611C711FCD94F70052DDD1 /* YMNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C6D1FCD94F70052DDD1 /* YMNetworkCache.m */; };
 		C2611C9E1FCD96CA0052DDD1 /* YYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C961FCD96CA0052DDD1 /* YYDiskCache.m */; };
 		C2611C9F1FCD96CA0052DDD1 /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C981FCD96CA0052DDD1 /* YYCache.m */; };
 		C2611CA01FCD96CA0052DDD1 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C9C1FCD96CA0052DDD1 /* YYKVStorage.m */; };
@@ -54,6 +54,10 @@
 		C20EE5F81FCE842600B0810C /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		C20EE5FA1FCE8DD700B0810C /* YMBaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YMBaseTableViewController.h; sourceTree = "<group>"; };
 		C20EE5FB1FCE8DD700B0810C /* YMBaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YMBaseTableViewController.m; sourceTree = "<group>"; };
+		C20EE5FE1FCEB22800B0810C /* YMNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMNetwork.m; sourceTree = "<group>"; };
+		C20EE5FF1FCEB22800B0810C /* YMNetworkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMNetworkCache.m; sourceTree = "<group>"; };
+		C20EE6001FCEB22800B0810C /* YMNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMNetwork.h; sourceTree = "<group>"; };
+		C20EE6011FCEB22800B0810C /* YMNetworkCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMNetworkCache.h; sourceTree = "<group>"; };
 		C2611C501FCD8A370052DDD1 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2611C531FCD8A370052DDD1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C2611C541FCD8A370052DDD1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -64,10 +68,6 @@
 		C2611C5F1FCD8A370052DDD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C2611C611FCD8A370052DDD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2611C621FCD8A370052DDD1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C2611C6C1FCD94F70052DDD1 /* YMNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMNetwork.m; sourceTree = "<group>"; };
-		C2611C6D1FCD94F70052DDD1 /* YMNetworkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMNetworkCache.m; sourceTree = "<group>"; };
-		C2611C6E1FCD94F70052DDD1 /* YMNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMNetwork.h; sourceTree = "<group>"; };
-		C2611C6F1FCD94F70052DDD1 /* YMNetworkCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMNetworkCache.h; sourceTree = "<group>"; };
 		C2611C961FCD96CA0052DDD1 /* YYDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYDiskCache.m; sourceTree = "<group>"; };
 		C2611C971FCD96CA0052DDD1 /* YYKVStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVStorage.h; sourceTree = "<group>"; };
 		C2611C981FCD96CA0052DDD1 /* YYCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYCache.m; sourceTree = "<group>"; };
@@ -156,6 +156,18 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		C20EE5FD1FCEB22800B0810C /* YMHttpTool */ = {
+			isa = PBXGroup;
+			children = (
+				C20EE6001FCEB22800B0810C /* YMNetwork.h */,
+				C20EE5FE1FCEB22800B0810C /* YMNetwork.m */,
+				C20EE5FF1FCEB22800B0810C /* YMNetworkCache.m */,
+				C20EE6011FCEB22800B0810C /* YMNetworkCache.h */,
+			);
+			name = YMHttpTool;
+			path = ../../YMHttpTool;
+			sourceTree = "<group>";
+		};
 		C2611C471FCD8A370052DDD1 = {
 			isa = PBXGroup;
 			children = (
@@ -175,9 +187,9 @@
 		C2611C521FCD8A370052DDD1 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				C20EE5FD1FCEB22800B0810C /* YMHttpTool */,
 				C2611CD91FCD97240052DDD1 /* YMNetworkHelper */,
 				C2611C941FCD96BE0052DDD1 /* Lib */,
-				C2611C6B1FCD94F70052DDD1 /* YMNetwork */,
 				C2611C531FCD8A370052DDD1 /* AppDelegate.h */,
 				C2611C541FCD8A370052DDD1 /* AppDelegate.m */,
 				C2611C561FCD8A370052DDD1 /* ViewController.h */,
@@ -195,18 +207,6 @@
 				C2611C621FCD8A370052DDD1 /* main.m */,
 			);
 			path = Example;
-			sourceTree = "<group>";
-		};
-		C2611C6B1FCD94F70052DDD1 /* YMNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				C2611C6E1FCD94F70052DDD1 /* YMNetwork.h */,
-				C2611C6C1FCD94F70052DDD1 /* YMNetwork.m */,
-				C2611C6F1FCD94F70052DDD1 /* YMNetworkCache.h */,
-				C2611C6D1FCD94F70052DDD1 /* YMNetworkCache.m */,
-			);
-			name = YMNetwork;
-			path = ../../YMNetwork;
 			sourceTree = "<group>";
 		};
 		C2611C941FCD96BE0052DDD1 /* Lib */ = {
@@ -413,13 +413,13 @@
 				C2611CDC1FCD974C0052DDD1 /* YMAPIConst.m in Sources */,
 				C2611CCE1FCD96F60052DDD1 /* UIButton+AFNetworking.m in Sources */,
 				C2611C581FCD8A370052DDD1 /* ViewController.m in Sources */,
+				C20EE6031FCEB22900B0810C /* YMNetworkCache.m in Sources */,
 				C2611CD01FCD96F60052DDD1 /* UIWebView+AFNetworking.m in Sources */,
 				C2611CD61FCD96F60052DDD1 /* AFURLRequestSerialization.m in Sources */,
 				C2611CEE1FCDAEBF0052DDD1 /* MBProgressHUD+YM.m in Sources */,
 				C2611C631FCD8A370052DDD1 /* main.m in Sources */,
 				C2611CD41FCD96F60052DDD1 /* AFHTTPSessionManager.m in Sources */,
 				C2611CE81FCDAE4C0052DDD1 /* MBProgressHUD.m in Sources */,
-				C2611C701FCD94F70052DDD1 /* YMNetwork.m in Sources */,
 				C2611CCF1FCD96F60052DDD1 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				C2611CD31FCD96F60052DDD1 /* AFURLResponseSerialization.m in Sources */,
 				C2611CCA1FCD96F60052DDD1 /* UIProgressView+AFNetworking.m in Sources */,
@@ -429,11 +429,11 @@
 				C2611C551FCD8A370052DDD1 /* AppDelegate.m in Sources */,
 				C2611CCB1FCD96F60052DDD1 /* UIRefreshControl+AFNetworking.m in Sources */,
 				C2611CCC1FCD96F60052DDD1 /* AFNetworkActivityIndicatorManager.m in Sources */,
-				C2611C711FCD94F70052DDD1 /* YMNetworkCache.m in Sources */,
 				C2611CA11FCD96CA0052DDD1 /* YYMemoryCache.m in Sources */,
 				C2611C9F1FCD96CA0052DDD1 /* YYCache.m in Sources */,
 				C20EE5FC1FCE8DD700B0810C /* YMBaseTableViewController.m in Sources */,
 				C2611CF31FCDB7210052DDD1 /* HUDTableViewController.m in Sources */,
+				C20EE6021FCEB22900B0810C /* YMNetwork.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

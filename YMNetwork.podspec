@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
 
-  s.name         = "YMNetwork"
+  s.name         = "YMHttpTool"
 
   s.version      = "0.0.1"
 
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.description  = "对PPNetwork(https://github.com/jkpang)修改-添加请求方式"
 
-  s.homepage     = "https://github.com/yanmingLiu/YMNetwork"
+  s.homepage     = "https://github.com/yanmingLiu/YMHttpTool"
 
   s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
@@ -18,9 +18,9 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, "9.0"
 
-  s.source       = { :git => "https://github.com/yanmingLiu/YMNetwork.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/yanmingLiu/YMHttpTool.git", :tag => s.version }
 
-  s.source_files  = "YMNetwork"
+  s.source_files  = "YMHttpTool"
 
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
