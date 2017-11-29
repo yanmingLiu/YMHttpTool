@@ -22,9 +22,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "AFNetworking.h"
-#import "AFNetworkActivityIndicatorManager.h"
-#import "YMNetworkCache.h"
 
 ///  HTTP Request method.
 typedef NS_ENUM(NSInteger, YMNetworkMethod) {
@@ -50,8 +47,6 @@ typedef NS_ENUM(NSUInteger, YMResponseSerializer) {
     YMResponseSerializerHTTP,
 };
 
-/// 网络状态的Block
-typedef void(^YMNetworkStatus)(AFNetworkReachabilityStatus status);
 
 /// 请求成功的Block
 typedef void(^YMHttpRequestSuccess)(id responseObject);
@@ -70,9 +65,6 @@ typedef void (^YMHttpProgress)(NSProgress *progress);
 @interface YMNetwork : NSObject
 
 #pragma mark - 开始监听网络
-
-/// 实时获取网络状态,通过Block回调实时获取(此方法可多次调用)
-+ (void)networkStatusWithBlock:(YMNetworkStatus)networkStatus;
 
 /// 有网YES, 无网:NO
 + (BOOL)isNetwork;

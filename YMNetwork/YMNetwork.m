@@ -7,7 +7,9 @@
 //
 
 #import "YMNetwork.h"
-
+#import "AFNetworking.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "YMNetworkCache.h"
 
 #define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
 
@@ -19,29 +21,6 @@ static AFHTTPSessionManager *_manager;
 static BOOL _isOpenLog = YES;   // 是否已开启日志打印
 
 #pragma mark - 开始监听网络
-
-+ (void)networkStatusWithBlock:(YMNetworkStatus)networkStatus {
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-            switch (status) {
-                case AFNetworkReachabilityStatusUnknown:
-                    networkStatus ? networkStatus(AFNetworkReachabilityStatusUnknown) : nil;
-                    break;
-                case AFNetworkReachabilityStatusNotReachable:
-                    networkStatus ? networkStatus(AFNetworkReachabilityStatusNotReachable) : nil;
-                    break;
-                case AFNetworkReachabilityStatusReachableViaWWAN:
-                    networkStatus ? networkStatus(AFNetworkReachabilityStatusReachableViaWWAN) : nil;
-                    break;
-                case AFNetworkReachabilityStatusReachableViaWiFi:
-                    networkStatus ? networkStatus(AFNetworkReachabilityStatusReachableViaWiFi) : nil;
-                    break;
-            }
-        }];
-    });
-}
 
 + (BOOL)isNetwork {
     return [AFNetworkReachabilityManager sharedManager].reachable;
