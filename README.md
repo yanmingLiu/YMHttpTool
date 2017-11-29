@@ -36,7 +36,7 @@ typedef void(^requestCallblock)(NSDictionary *responseObject, NSString *msg, NSE
 
 ## Usage 使用方法
 
-依赖AFNetworking YYCache  
+依赖AFNetworking YYCache  指定了AFNetworking YYCache最新版本，不需要单独pod。
 
 ```
 pod 'YMNetwork'

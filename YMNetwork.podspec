@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/yanmingLiu/YMNetwork.git", :tag => s.version }
 
-  s.source_files  = "YMNetwork/YMNetwork/*.{h,m}"
+  s.source_files  = "YMNetwork/**/*.{h,m}"
 
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
@@ -28,8 +28,8 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   
-  #s.dependency 'AFNetworking'
+  s.dependency 'AFNetworking'
 
-  #s.dependency 'YYCache'
+  s.dependency 'YYCache'
 
 end
