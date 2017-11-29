@@ -43,7 +43,7 @@ pod 'YMHttpTool'
 ```
 ### Import
 ```objc
-#import "YMHttpTool.h"
+#import "YMNetwork.h"
 ```
 
 具体使用请查看demo YMNetworkHelper
