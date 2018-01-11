@@ -21,7 +21,7 @@ extern NSString * const kSuccessful;
 extern NSString * const kNoMoreData;
 
 /**
- 网络请求回调
+ 网络请求回调 - 可以根据具体需求修改requestCallblock
 
  @param responseObject 返回数据
  @param msg 提示

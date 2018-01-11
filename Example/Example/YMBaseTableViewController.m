@@ -39,23 +39,12 @@
 
 /// 空白页显示图片
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    //    if (self.isLoading) {
-    //        return [UIImage imageNamed:@"loading_imgBlue_78x78" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-    //    }
-    //    else {
-    //        return [UIImage imageNamed:@"notNet"];
-    //    }
-    return [UIImage imageNamed:@"notNet"];
-}
-
-/// 空白页显示标题
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *title = @"";
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:18.0f],
-                                 NSForegroundColorAttributeName:[UIColor darkGrayColor]
-                                 };
-    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    if (self.isLoading) {
+        return [UIImage imageNamed:@"loading_imgBlue_78x78" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+    }
+    else {
+        return [UIImage imageNamed:@"notNet"];
+    }
 }
 
 /// 空白页显示详细描述
@@ -72,6 +61,9 @@
                                  NSParagraphStyleAttributeName:paragraph
                                  };
     
+    if (self.loading) {
+        return nil;
+    }
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
@@ -92,6 +84,10 @@
     [attStr addAttribute:NSForegroundColorAttributeName
                    value:[UIColor purpleColor]
                    range:NSMakeRange(7, 4)];
+    
+    if (self.loading) {
+        return nil;
+    }
     return attStr;
 }
 
@@ -101,19 +97,19 @@
 
 
 /// 图片动画
-//- (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
-//{
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-//    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-//    animation.toValue = [NSValue valueWithCATransform3D: CATransform3DMakeRotation(M_PI_2, 0.0, 0.0, 1.0) ];
-//    animation.duration = 0.25;
-//    animation.cumulative = YES;
-//    animation.repeatCount = MAXFLOAT;
-//    
-//    return animation;
-//}
+- (CAAnimation *)imageAnimationForEmptyDataSet:(UIScrollView *)scrollView
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+    animation.toValue = [NSValue valueWithCATransform3D: CATransform3DMakeRotation(M_PI_2, 0.0, 0.0, 1.0) ];
+    animation.duration = 0.25;
+    animation.cumulative = YES;
+    animation.repeatCount = MAXFLOAT;
+    
+    return animation;
+}
 
-/// 设置空白页面的背景色
+//// 设置空白页面的背景色
 //- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
 //    UIColor *appleGreenColor = [UIColor lightGrayColor];
 //    return appleGreenColor;
@@ -132,7 +128,6 @@
 /// 按钮点击
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     self.loading = YES;
-
 }
 
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
@@ -141,9 +136,9 @@
 
 // 向代理请求图像视图动画权限。 默认值为NO。
 // 确保从 imageAnimationForEmptyDataSet 返回有效的CAAnimation对象：
-//- (BOOL)emptyDataSetShouldAnimateImageView:(UIScrollView *)scrollView {
-//    return self.isLoading;
-//}
+- (BOOL)emptyDataSetShouldAnimateImageView:(UIScrollView *)scrollView {
+    return self.isLoading;
+}
 
 
 

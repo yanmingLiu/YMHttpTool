@@ -7,7 +7,6 @@
 //
 
 #import "NetworkTableViewController.h"
-#import "MBProgressHUD+YM.h"
 #import "YMNetworkHelper.h"
 
 static NSString* EmptyImage = @"nothing";
@@ -15,66 +14,65 @@ static NSString* EmptyImage = @"nothing";
 @interface NetworkTableViewController ()
 
 
-@property (nonatomic, strong) NSMutableArray * dataArr; 
+@property (nonatomic, strong) NSArray * dataArr; 
 
 
 @end
 
 @implementation NetworkTableViewController
 
-
-- (void)load {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
-    NSString *url = [kApiPrefix stringByAppendingString:url_home_keywords];
-    
-    [YMNetworkHelper requestMethod:YMKRequestMethodGET URL:url params:nil callback:^(NSDictionary *responseObject, NSString *msg, NSError *error, BOOL noNetwork) {
-        
-        // 隐藏hud
-        [MBProgressHUD hideHUDForView:self.view animated:NO];
-        
-        if (noNetwork) { // 没有网络处理空界面
-            NSLog(@"没有网络");
-            self.loading = NO;
-            return ;
-        }
-        
-        if (responseObject) {// 成功处理数据
-            [MBProgressHUD showSuccessText:msg];
-            
-            self.dataArr = [NSMutableArray arrayWithArray:responseObject[@"data"]];
-            
-            if (self.dataArr.count) {
-                [self.tableView reloadData];
-            }
-            
-            if (self.dataArr.count == 0) {
-                self.loading = NO;
-            }
-        }
-        else { // 失败
-            [MBProgressHUD showFailureText:msg];
-            if (self.dataArr.count == 0) {
-                self.loading = NO;
-            }
-        }
-    }];
+    self.loading = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.loading = NO;
+    });
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"加载数据" style:(UIBarButtonItemStylePlain) target:self action:@selector(load)];
-            
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 
 }
+
+/// 使用最原始YMNetworkHelper
+- (void)load {
+    NSString *url = [kApiPrefix stringByAppendingString:url_login];
+    [YMNetworkHelper requestMethod:YMKRequestMethodGET URL:url params:nil callback:^(NSDictionary *responseObject, NSString *msg, NSError *erro, BOOL noNetwork) {
+        if (noNetwork) {
+            NSLog("没有网络");
+        }
+    }];
+}
+
+/// 使用最原始YMNetwork
+- (void)loadData {
+    NSString *url = @"https://www.baidu.com";
+    
+    [YMNetwork requestMethod:YMKRequestMethodGET URL:url params:nil success:^(id responseObject) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.loading = NO;
+        });
+    } failure:^(NSError *error) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.loading = NO;
+        });
+    }];
+     
+     self.dataArr = @[@1,@1,@1,@1,@1];
+     [self.tableView reloadData];
+}
+
+
 
 /// 按钮点击
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     self.loading = YES;
     
-    [self load];
+//    [self load];
+    [self loadData];
 }
 
 #pragma mark - tableViewDelegate
@@ -84,22 +82,15 @@ static NSString* EmptyImage = @"nothing";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
     if (self.dataArr.count) {
-        cell.textLabel.text = self.dataArr[indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
     }
-    
-    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    
 }
 
 @end

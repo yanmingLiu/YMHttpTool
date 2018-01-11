@@ -32,15 +32,13 @@ NSString * const kNoMoreData = @"没有更多数据了";
         if (callback)  callback(nil,kNetError,nil, YES);
         return nil;
     }
-    
     if (urlStr.length == 0) {
         NSError *error = [NSError errorWithDomain:@"xx.com" code:0 userInfo:@{NSLocalizedDescriptionKey:@"链接为空"}];
         if (callback) callback(nil, nil, error, NO);
         return nil;
     }
-    
     // 在请求之前你可以统一配置你请求的相关参数 ,设置请求头, 请求参数的格式, 返回数据的格式....这样你就不需要每次请求都要设置一遍相关参数
-    [YMNetwork setValue:@"510100" forHTTPHeaderField:@"X-ADCODE"];
+    // [YMNetwork setValue:@"" forHTTPHeaderField:@"X-AUTHTOKEN"];
     
     return [YMNetwork requestMethod:method URL:urlStr params:params success:^(id responseObject) {
         if (callback)
@@ -61,7 +59,6 @@ NSString * const kNoMoreData = @"没有更多数据了";
         if (callback)  callback(nil,kNetError,nil, YES);
         return nil;
     }
-    
     if (urlStr.length == 0) {
         NSError *error = [NSError errorWithDomain:@"xx.com" code:0 userInfo:@{NSLocalizedDescriptionKey:@"链接为空"}];
         if (callback) callback(nil, nil, error, NO);
