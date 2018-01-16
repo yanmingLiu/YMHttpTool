@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
   s.name         = "YMHttpTool"
 
-  s.version      = "0.0.4"
+  s.version      = "0.0.5"
 
   s.summary      = "AFNetworking 3.x封装的网络工具"
 
@@ -28,8 +28,8 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   
-  s.dependency 'AFNetworking'
+  # s.dependency 'AFNetworking'
 
-  s.dependency 'YYCache'
+ # s.dependency 'YYCache'
 
 end
