@@ -7,7 +7,7 @@
  * PPNetworkHelper 的地址如下：
  * https://github.com/jkpang/PPNetworkHelper
  *
- * version: 0.0.1
+ * version: 0.0.5
  *********************************************************************************
  */
 
