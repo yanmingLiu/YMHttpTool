@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/yanmingLiu/YMHttpTool.git", :tag => s.version }
 
-  s.source_files  = "YMHttpTool"
+  s.source_files  = "YMHttpTool/*.{h,m}"
 
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
@@ -28,8 +28,10 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   
-  s.dependency 'AFNetworking'
+ s.dependency 'AFNetworking'
 
-  s.dependency 'YYCache'
+ s.dependency 'YYCache'
+
+ 
 
 end

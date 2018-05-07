@@ -100,7 +100,7 @@ static NSString* EmptyImage = @"nothing";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     if (self.dataArr.count) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
     }
     return cell;
 }
