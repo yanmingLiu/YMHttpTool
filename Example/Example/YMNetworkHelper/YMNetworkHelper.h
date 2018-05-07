@@ -56,8 +56,7 @@ typedef void(^APICallback)(id responseObject, NSString *msg, NSError *error);
 
 #pragma mark - 业务公共方法
 //+ (NSURLSessionTask *)rereshTokenCallback:(APICallback)callback;
-//
-//+ (NSString *)createUrlWithApiName:(NSString *)api parameter:(NSDictionary *)par ;
+
 
 @end
 
