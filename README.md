@@ -8,12 +8,12 @@
 ```
 ///  HTTP Request method.
 typedef NS_ENUM(NSInteger, YMNetworkMethod) {
-    YMKRequestMethodGET = 0,
-    YMKRequestMethodPOST,
-    YMKRequestMethodHEAD,
-    YMKRequestMethodPUT,
-    YMKRequestMethodDELETE,
-    YMKRequestMethodPATCH,
+    YMNetworkMethodGET,
+    YMNetworkMethodPOST,
+    YMNetworkMethodHEAD,
+    YMNetworkMethodPUT,
+    YMNetworkMethodDELETE,
+    YMNetworkMethodPATCH,
 };
 
 ```
@@ -51,7 +51,7 @@ demo另外添加了MBProgressHUD 分类，更容易添加HUD。
 添加DZNEmptyDataSet（空页面的处理）。
 
 
-### 根据需求修改YMNetworkHelper
+### 根据业务需求修改YMNetworkHelper
 ```
 #import "YMNetwork.h"
 #import "YMAPIConst.h"
@@ -68,27 +68,25 @@ extern NSString * const kNoMoreData;
 
 /**
 网络请求回调 - 可根据具体自己的需求修改返回值
-
-@param responseObject 返回数据
-@param msg 提示
-@param noNetwork 是否有网络
 */
+typedef void(^APICallback)(id responseObject, NSString *msg, NSError *error);
 
-typedef void(^requestCallblock)(NSDictionary *responseObject, NSString *msg, NSError *erro, BOOL noNetwork);
-
-/// 缓存
-typedef void(^requestCacheBlock)(NSDictionary *responseCache);
 
 @interface YMNetworkHelper : NSObject
-
 
 #pragma mark - 请求的公共方法
 
 /// 无缓存
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method URL:(NSString *)urlStr params:(NSDictionary *)params callback:(requestCallblock)callback;
++ (NSURLSessionTask *)postWithApi:(NSString *)api params:(NSDictionary *)params callback:(APICallback)callback;
 
 /// 有缓存
-+ (NSURLSessionTask *)requestWithMethod:(YMNetworkMethod)method  URL:(NSString *)urlStr params:(NSDictionary *)params cacheBlock:(requestCacheBlock)cacheBlock callback:(requestCallblock)callback;
++ (NSURLSessionTask *)postWithApi:(NSString *)api params:(NSDictionary *)params cacheBlock:(YMRequestCache)cacheBlock callback:(APICallback)callback;
+
+/// post的方式请求get的地址
++ (NSURLSessionTask *)postWithGetApi:(NSString *)api params:(NSDictionary *)params callback:(APICallback)callback;
+
+/// 使用body传数据
++ (NSURLSessionTask *)postBodyWithApi:(NSString *)api json:(id)json callback:(APICallback)callback;
 
 ```
 
