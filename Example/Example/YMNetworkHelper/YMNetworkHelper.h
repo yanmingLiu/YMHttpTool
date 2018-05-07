@@ -7,61 +7,57 @@
 //
 
 #import "YMNetwork.h"
+#import "YMNetworkCache.h"
 #import "YMAPIConst.h"
-
-#define kServer_code_200   200
-#define kServer_code_4001  4001 //权限发生改变
-#define kServer_code_401   401 //被其它人员登录挤出去
-
 
 extern NSString * const kLoading ;
 extern NSString * const kLoadError;
 extern NSString * const kNetError;
 extern NSString * const kSuccessful;
 extern NSString * const kNoMoreData;
+extern NSString * const kURLError;
+extern NSString * const kLoadSuccess;
 
-/**
- 网络请求回调 - 可以根据具体需求修改requestCallblock
-
- @param responseObject 返回数据
- @param msg 提示
- @param noNetwork 是否有网络
+/*
+ ERROR_SERVER_BUSY(19999, "系统繁忙，请稍后再试"),
+ ERROR_PARAM_WRONG(10400, "参数错误"),
+ ERROR_REQUEST_WRONG(10405, "请求方式不允许"),
+ ERROR_NOT_EXIST(10404, "数据不存在或已被删除"),
+ ERROR_NO_AUTHORITY(10403, "无权进行此操作"),
+ ERROR_SERVER_ERROR(10500, "服务器异常，请稍后再试"),
+ ERROR_OPTION_FAIL(10415, "请求流格式错误，注意Content-type"),
+ ERROR_NOT_LOGIN(10401, "用户未登录");
  */
+extern NSInteger  const kSuccesCode;
+extern NSInteger  const kTokenOver;
 
-typedef void(^requestCallblock)(NSDictionary *responseObject, NSString *msg, NSError *erro, BOOL noNetwork);
 
-/// 缓存
-typedef void(^requestCacheBlock)(NSDictionary *responseCache);
+#define kServerMsg    @"msg"
+#define kServerData   @"result"
+#define kServerCode   @"code"
 
 @interface YMNetworkHelper : NSObject
 
+typedef void(^APICallback)(id responseObject, NSString *msg, NSError *error);
 
 #pragma mark - 请求的公共方法
 
 /// 无缓存
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method URL:(NSString *)urlStr params:(NSDictionary *)params callback:(requestCallblock)callback;
++ (NSURLSessionTask *)postWithApi:(NSString *)api params:(NSDictionary *)params callback:(APICallback)callback;
 
 /// 有缓存
-+ (NSURLSessionTask *)requestWithMethod:(YMNetworkMethod)method  URL:(NSString *)urlStr params:(NSDictionary *)params cacheBlock:(requestCacheBlock)cacheBlock callback:(requestCallblock)callback;
++ (NSURLSessionTask *)postWithApi:(NSString *)api params:(NSDictionary *)params cacheBlock:(YMRequestCache)cacheBlock callback:(APICallback)callback;
 
+/// post的方式请求get的地址
++ (NSURLSessionTask *)postWithGetApi:(NSString *)api params:(NSDictionary *)params callback:(APICallback)callback;
 
-#pragma mark - 七牛上传
+/// 使用body传数据
++ (NSURLSessionTask *)postBodyWithApi:(NSString *)api json:(id)json callback:(APICallback)callback;
 
-/*
-/// 上传1张图片
-+ (void)uploadWithImage:(UIImage*)image updateType:(QNUpdateImageType)updateType withCallback:(void(^)(BOOL success, NSString* msg, NSString* key))callback;
-
-/// 上传多张图片,按队列依次上传
-+ (void)uploadImages:(NSArray *)imageArray updateType:(QNUpdateImageType)updateType withCallback:(void(^)(BOOL success, NSString* msg, NSString* keys))callback;
-
-/// 七牛上传token
-+ (NSURLSessionTask *)getQNTokenWithType:(QNUpdateImageType)type Success:(void (^)(NSString *publicToken))success;
-*/
- 
-
-
-
-
+#pragma mark - 业务公共方法
+//+ (NSURLSessionTask *)rereshTokenCallback:(APICallback)callback;
+//
+//+ (NSString *)createUrlWithApiName:(NSString *)api parameter:(NSDictionary *)par ;
 
 @end
 

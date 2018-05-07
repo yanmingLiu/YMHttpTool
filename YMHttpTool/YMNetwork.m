@@ -7,9 +7,7 @@
 //
 
 #import "YMNetwork.h"
-#import "AFNetworking.h"
-#import "AFNetworkActivityIndicatorManager.h"
-#import "YMNetworkCache.h"
+
 
 #define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
 
@@ -65,31 +63,59 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
     }
 }
 
+/**
+ *  json转字符串
+ */
++ (NSString *)jsonToString:(id)data {
+    if(data == nil) { return nil; }
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+/**
+ 存储着所有的请求task数组
+ */
++ (NSMutableArray *)allSessionTask {
+    if (!_allSessionTask) {
+        _allSessionTask = [[NSMutableArray alloc] init];
+    }
+    return _allSessionTask;
+}
+
 #pragma mark - 网络请求
 
 /**
  无缓存
  */
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method URL:(NSString *)urlStr params:(id)params success:(YMHttpRequestSuccess)success failure:(YMHttpRequestFailed)failure 
++ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method url:(NSString *)urlStr params:(id)params success:(YMRequestSuccess)success failure:(YMRequestFailed)failure 
 {
-    return [self requestMethod:method URL:urlStr params:params responseCache:nil success:success failure:failure];
+    return [self requestMethod:method url:urlStr params:params responseCache:nil success:success failure:failure];
 }
 
 /**
  *  请求,自动缓存
  *  @return 返回的对象可取消请求,调用cancel方法
  */
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method URL:(NSString *)urlStr params:(id)params responseCache:(YMHttpRequestCache)responseCache success:(YMHttpRequestSuccess)success failure:(YMHttpRequestFailed)failure 
++ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method url:(NSString *)urlStr params:(id)params responseCache:(YMRequestCache)responseCache success:(YMRequestSuccess)success failure:(YMRequestFailed)failure 
 {
     //读取缓存
-    responseCache!=nil ? responseCache([YMNetworkCache httpCacheForURL:urlStr parameters:params]) : nil;
+    if (responseCache) {
+        id cacheResponse = [YMNetworkCache httpCacheForURL:urlStr parameters:params];
+        if (cacheResponse) {
+            responseCache(cacheResponse);
+        } 
+        if (_isOpenLog) {NSLog(@"\n缓存--- %@ \n",[self jsonToString:cacheResponse]);}
+    }
+    if (_isOpenLog) {
+        NSLog(@"\n请求地址: %@ \n请求头:%@ \n请求参数:%@ \n", urlStr,_manager.requestSerializer.HTTPRequestHeaders, params);
+    }
     
     urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     // 请求成功回调
     void(^responseSuccess)(NSURLSessionDataTask * task, id responseObject) = ^(NSURLSessionDataTask * task, id responseObject) {
         
-        if (_isOpenLog) {NSLog(@"responseObject = %@",[self jsonToString:responseObject]);}
+        if (_isOpenLog) {NSLog(@"\n responseObject = %@ \n",[self jsonToString:responseObject]);}
         
         [[self allSessionTask] removeObject:task];
         success ? success(responseObject) : nil;
@@ -107,7 +133,7 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
     };
     
     switch (method) {
-        case YMKRequestMethodGET:
+        case YMNetworkMethodGET:
         {
             NSURLSessionTask *sessionTask = [_manager GET:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
                 
@@ -120,8 +146,7 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
             sessionTask ? [[self allSessionTask] addObject:sessionTask] : nil ;
             return sessionTask;
         }
-            
-        case YMKRequestMethodPOST:
+        case YMNetworkMethodPOST:
         {
             NSURLSessionTask *sessionTask = [_manager POST:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
                 
@@ -133,17 +158,17 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
             sessionTask ? [[self allSessionTask] addObject:sessionTask] : nil ;
             return sessionTask;
         }
-        case YMKRequestMethodHEAD:
+        case YMNetworkMethodHEAD:
         {
             NSURLSessionTask *sessionTask = [_manager HEAD:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task) {
-                
+                responseSuccess(task, nil);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                
+                responseFailure(task, error);
             }];
             sessionTask ? [[self allSessionTask] addObject:sessionTask] : nil ;
             return sessionTask;
         }
-        case YMKRequestMethodPUT:
+        case YMNetworkMethodPUT:
         {
             NSURLSessionTask *sessionTask = [_manager PUT:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 responseSuccess(task, responseObject);
@@ -153,7 +178,7 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
             sessionTask ? [[self allSessionTask] addObject:sessionTask] : nil ;
             return sessionTask;
         }
-        case YMKRequestMethodDELETE:
+        case YMNetworkMethodDELETE:
         {
             NSURLSessionTask *sessionTask = [_manager DELETE:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 responseSuccess(task, responseObject);
@@ -163,7 +188,7 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
             sessionTask ? [[self allSessionTask] addObject:sessionTask] : nil ;
             return sessionTask;
         }
-        case YMKRequestMethodPATCH:
+        case YMNetworkMethodPATCH:
         {
             NSURLSessionTask *sessionTask = [_manager PATCH:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 responseSuccess(task, responseObject);
@@ -178,7 +203,6 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
 }
 
 
-
 #pragma mark - 上传多张图片
 + (NSURLSessionTask *)uploadImagesWithURL:(NSString *)URL
                                parameters:(id)parameters
@@ -187,9 +211,9 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
                                 fileNames:(NSArray<NSString *> *)fileNames
                                imageScale:(CGFloat)imageScale
                                 imageType:(NSString *)imageType
-                                 progress:(YMHttpProgress)progress
-                                  success:(YMHttpRequestSuccess)success
-                                  failure:(YMHttpRequestFailed)failure {
+                                 progress:(YMRequestProgress)progress
+                                  success:(YMRequestSuccess)success
+                                  failure:(YMRequestFailed)failure {
     NSURLSessionTask *sessionTask = [_manager POST:URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (NSUInteger i = 0; i < images.count; i++) {
@@ -237,9 +261,10 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
 #pragma mark - 下载文件
 + (NSURLSessionTask *)downloadWithURL:(NSString *)URL
                               fileDir:(NSString *)fileDir
-                             progress:(YMHttpProgress)progress
+                             progress:(YMRequestProgress)progress
                               success:(void(^)(NSString *))success
-                              failure:(YMHttpRequestFailed)failure {
+                              failure:(YMRequestFailed)failure {
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URL]];
     __block NSURLSessionDownloadTask *downloadTask = [_manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         //下载进度
@@ -273,26 +298,6 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
     return downloadTask;
 }
 
-/**
- *  json转字符串
- */
-+ (NSString *)jsonToString:(id)data {
-    if(data == nil) { return nil; }
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-}
-
-/**
- 存储着所有的请求task数组
- */
-+ (NSMutableArray *)allSessionTask {
-    if (!_allSessionTask) {
-        _allSessionTask = [[NSMutableArray alloc] init];
-    }
-    return _allSessionTask;
-}
-
-
 
 #pragma mark - 初始化AFHTTPSessionManager相关属性
 
@@ -303,7 +308,7 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
 + (void)initialize {
     
     _manager = [AFHTTPSessionManager manager];
-    _manager.requestSerializer.timeoutInterval = 10.f;
+    _manager.requestSerializer.timeoutInterval = 30.f;
     _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/plain", @"text/javascript", @"text/xml", @"image/*", nil];
     
 //    [_manager.requestSerializer setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];

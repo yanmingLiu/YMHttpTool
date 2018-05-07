@@ -8,6 +8,7 @@
 
 #import "NetworkTableViewController.h"
 #import "YMNetworkHelper.h"
+#import "NSDictionary+Params.h"
 
 static NSString* EmptyImage = @"nothing";
 
@@ -37,21 +38,36 @@ static NSString* EmptyImage = @"nothing";
 
 }
 
+/// get地址post请求
+- (void)load2 {
+    // username=13330955821&password=kkkkkk&grant_type=password&scope=server
+    NSDictionary *dic = @{@"username" : @"13330955821", @"password" : @"kkkkkk", @"grant_type" : @"password", @"scope" : @"server"};
+    
+    [YMNetworkHelper postWithGetApi:url_login params:dic callback:^(id responseObject, NSString *msg, NSError *error) {
+        if (error) {
+            NSLog(@"error -- %@ \nmsg:%@", error, msg);
+        }else {
+            
+        }
+        self.loading = NO;
+    }];
+}
+
 /// 使用最原始YMNetworkHelper
 - (void)load {
     NSString *url = [kApiPrefix stringByAppendingString:url_login];
-    [YMNetworkHelper requestMethod:YMKRequestMethodGET URL:url params:nil callback:^(NSDictionary *responseObject, NSString *msg, NSError *erro, BOOL noNetwork) {
-        if (noNetwork) {
-            NSLog("没有网络");
-        }
+    
+    [YMNetworkHelper postWithApi:url params:nil callback:^(id responseObject, NSString *msg, NSError *error) {
+        
     }];
+
 }
 
 /// 使用最原始YMNetwork
 - (void)loadData {
     NSString *url = @"https://www.baidu.com";
     
-    [YMNetwork requestMethod:YMKRequestMethodGET URL:url params:nil success:^(id responseObject) {
+    [YMNetwork requestMethod:YMNetworkMethodGET url:url params:nil success:^(id responseObject) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.loading = NO;
         });
@@ -71,8 +87,8 @@ static NSString* EmptyImage = @"nothing";
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     self.loading = YES;
     
-//    [self load];
-    [self loadData];
+    [self load2];
+//    [self loadData];
 }
 
 #pragma mark - tableViewDelegate

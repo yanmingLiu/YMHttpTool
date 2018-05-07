@@ -21,7 +21,7 @@ NSString *const kApiPrefix = @"";
 
 #elif TestSever
 
-NSString * const kApiPrefix = @"https://tserver.youkexue.com/v1/";
+NSString * const kApiPrefix = @"http://10.10.10.10:9999/";
 
 #endif
 
@@ -34,7 +34,7 @@ NSString * const kApiPrefix = @"https://tserver.youkexue.com/v1/";
 NSString * const url_register = @"agency/reg";
 
 /** 登录 */ 
-NSString * const url_login= @"agency/login";
+NSString * const url_login= @"auth/agency/oauth/token?";
 
 
 #pragma mark - 业务接口地址

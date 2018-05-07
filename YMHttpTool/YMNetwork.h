@@ -22,15 +22,18 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "AFNetworking.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "YMNetworkCache.h"
 
 ///  HTTP Request method.
 typedef NS_ENUM(NSInteger, YMNetworkMethod) {
-    YMKRequestMethodGET,
-    YMKRequestMethodPOST,
-    YMKRequestMethodHEAD,
-    YMKRequestMethodPUT,
-    YMKRequestMethodDELETE,
-    YMKRequestMethodPATCH,
+    YMNetworkMethodGET,
+    YMNetworkMethodPOST,
+    YMNetworkMethodHEAD,
+    YMNetworkMethodPUT,
+    YMNetworkMethodDELETE,
+    YMNetworkMethodPATCH,
 };
 
 typedef NS_ENUM(NSUInteger, YMRequestSerializer) {
@@ -49,16 +52,16 @@ typedef NS_ENUM(NSUInteger, YMResponseSerializer) {
 
 
 /// 请求成功的Block
-typedef void(^YMHttpRequestSuccess)(id responseObject);
+typedef void(^YMRequestSuccess)(id responseObject);
 
 /// 请求失败的Block
-typedef void(^YMHttpRequestFailed)(NSError *error);
+typedef void(^YMRequestFailed)(NSError *error);
 
 /// 缓存的Block
-typedef void(^YMHttpRequestCache)(id responseCache);
+typedef void(^YMRequestCache)(id responseCache);
 
 /// 上传或者下载的进度, Progress.completedUnitCount:当前大小 - Progress.totalUnitCount:总大小
-typedef void (^YMHttpProgress)(NSProgress *progress);
+typedef void (^YMRequestProgress)(NSProgress *progress);
 
 
 @class AFHTTPSessionManager;
@@ -92,22 +95,14 @@ typedef void (^YMHttpProgress)(NSProgress *progress);
  * 无缓存请求
  * @param method 请求方式
  */
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method
-                                URL:(NSString *)urlStr 
-                             params:(id)params   
-                            success:(YMHttpRequestSuccess)success  
-                            failure:(YMHttpRequestFailed)failure;
++ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method url:(NSString *)urlStr params:(id)params success:(YMRequestSuccess)success failure:(YMRequestFailed)failure;
 
 /**
  *  请求,自动缓存
  *  @return 返回的对象可取消请求,调用cancel方法
  */
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method 
-                                URL:(NSString *)urlStr
-                             params:(id)params
-                      responseCache:(YMHttpRequestCache)responseCache 
-                            success:(YMHttpRequestSuccess)success
-                            failure:(YMHttpRequestFailed)failure;
++ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method url:(NSString *)urlStr params:(id)params responseCache:(YMRequestCache)responseCache success:(YMRequestSuccess)success failure:(YMRequestFailed)failure;
+
 
 /**
  *  上传单/多张图片
@@ -132,9 +127,9 @@ typedef void (^YMHttpProgress)(NSProgress *progress);
                                          fileNames:(NSArray<NSString *> *)fileNames
                                         imageScale:(CGFloat)imageScale
                                          imageType:(NSString *)imageType
-                                          progress:(YMHttpProgress)progress
-                                           success:(YMHttpRequestSuccess)success
-                                           failure:(YMHttpRequestFailed)failure;
+                                          progress:(YMRequestProgress)progress
+                                           success:(YMRequestSuccess)success
+                                           failure:(YMRequestFailed)failure;
 
 /**
  *  下载文件
@@ -149,9 +144,9 @@ typedef void (^YMHttpProgress)(NSProgress *progress);
  */
 + (NSURLSessionTask *)downloadWithURL:(NSString *)URL
                                        fileDir:(NSString *)fileDir
-                                      progress:(YMHttpProgress)progress
+                                      progress:(YMRequestProgress)progress
                                        success:(void(^)(NSString *filePath))success
-                                       failure:(YMHttpRequestFailed)failure;
+                                       failure:(YMRequestFailed)failure;
 
 
 
