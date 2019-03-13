@@ -22,9 +22,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "AFNetworking.h"
-#import "AFNetworkActivityIndicatorManager.h"
 #import "YMNetworkCache.h"
+
 
 ///  HTTP Request method.
 typedef NS_ENUM(NSInteger, YMNetworkMethod) {

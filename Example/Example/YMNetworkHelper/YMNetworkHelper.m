@@ -7,6 +7,7 @@
 //
 
 #import "YMNetworkHelper.h"
+#import "AFNetworking.h"
 
 NSString * const kLoading          = @"正在加载...";
 NSString * const kLoadError        = @"加载失败";
