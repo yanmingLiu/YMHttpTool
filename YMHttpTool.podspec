@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
   s.name         = "YMHttpTool"
 
-  s.version      = "0.1.0"
+  s.version      = "1.0"
 
   s.summary      = "AFNetworking 3.x封装的网络工具"
 
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/yanmingLiu/YMHttpTool"
 
-  s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  s.license      = { :type => "MIT", :file => "LICENSE" }
 
   s.author       = { "LiuYanming" => "374402328@qq.com" }
 
