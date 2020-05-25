@@ -11,7 +11,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "AFNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +22,13 @@ typedef NS_ENUM(NSInteger, YMHTTPMethod) {
     YMHTTPMethodPUT,
     YMHTTPMethodDELETE,
     YMHTTPMethodPATCH,
+};
+
+typedef NS_ENUM(NSInteger, NetworkStatus) {
+    Unknown          = -1,
+    NotReachable     = 0,
+    WWAN = 1,
+    WiFi = 2,
 };
 
 typedef NS_ENUM(NSUInteger, YMRequestSerializer) {
@@ -44,7 +50,7 @@ typedef NS_ENUM(NSUInteger, YMResponseSerializer) {
 @interface YMNetwork : NSObject
 
 /// 网络监听
-+ (void)reachabilityStatusChangeBlock:(nullable void (^)(AFNetworkReachabilityStatus status))block;
++ (void)reachabilityStatusChangeBlock:(nullable void (^)(NetworkStatus status))block;
 
 /// 取消所有HTTP请求
 + (void)cancelAllRequest;

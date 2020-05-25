@@ -7,7 +7,7 @@
 //
 
 #import "YMNetwork.h"
-
+#import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
 #define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]

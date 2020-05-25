@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    [YMNetwork reachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+    [YMNetwork reachabilityStatusChangeBlock:^(NetworkStatus status) {
         
     }];
 
