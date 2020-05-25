@@ -4,11 +4,11 @@ Pod::Spec.new do |s|
 
   s.name         = "YMHttpTool"
 
-  s.version      = "1.0"
+  s.version      = "1.1"
 
-  s.summary      = "AFNetworking 3.x封装的网络工具"
+  s.summary      = "AFNetworking 4.x封装的网络工具"
 
-  s.description  = "对PPNetwork(https://github.com/jkpang)修改-添加请求方式"
+  s.description  = "AFNetworking 第一次封装，通常app需要封装2层，业务层需要再封装一层，示例YMNetworkHelper针对业务层封装"
 
   s.homepage     = "https://github.com/yanmingLiu/YMHttpTool"
 
@@ -29,9 +29,5 @@ Pod::Spec.new do |s|
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   
  s.dependency 'AFNetworking'
-
- s.dependency 'YYCache'
-
- 
 
 end

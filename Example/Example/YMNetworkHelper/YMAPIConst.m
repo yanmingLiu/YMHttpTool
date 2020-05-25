@@ -12,34 +12,21 @@
 
 #if ProductSever
 
-NSString *const kApiPrefix = @"";
+NSString *const kApiPrefix =  @"https://gank.io/api/v2";
 
 #elif DevelopSever
 
-NSString *const kApiPrefix = @"";
+NSString *const kApiPrefix =  @"https://gank.io/api/v2";
 
 
 #elif TestSever
 
-NSString * const kApiPrefix = @"http://10.10.10.10:9999/";
+NSString * const kApiPrefix = @"https://gank.io/api/v2";
 
 #endif
 
 
 
 
-#pragma mark - 公共接口地址
-
-/** 注册 */ 
-NSString * const url_register = @"agency/reg";
-
-/** 登录 */ 
-NSString * const url_login= @"auth/agency/oauth/token?";
-
-
-#pragma mark - 业务接口地址
-
-//关键词
-NSString * const url_home_keywords = @"custom/keywords";
 
 @end

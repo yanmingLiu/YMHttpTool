@@ -8,7 +8,6 @@
 
 #import "NetworkTableViewController.h"
 #import "YMNetworkHelper.h"
-#import "NSDictionary+Params.h"
 
 static NSString* EmptyImage = @"nothing";
 
@@ -25,60 +24,40 @@ static NSString* EmptyImage = @"nothing";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.loading = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.loading = NO;
-    });
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.dataArr = @[];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 
-}
-
-/// get地址post请求
-- (void)load2 {
-    // username=13330955821&password=kkkkkk&grant_type=password&scope=server
-    NSDictionary *dic = @{@"username" : @"13330955821", @"password" : @"kkkkkk", @"grant_type" : @"password", @"scope" : @"server"};
     
-    [YMNetworkHelper postWithGetApi:url_login params:dic callback:^(id responseObject, NSString *msg, NSError *error) {
-        if (error) {
-            NSLog(@"error -- %@ \nmsg:%@", error, msg);
-        }else {
-            
-        }
-        self.loading = NO;
-    }];
+    self.loading = YES;
+    [self loadData];
 }
-
-/// 使用最原始YMNetworkHelper
-- (void)load {
-    NSString *url = [kApiPrefix stringByAppendingString:url_login];
+- (IBAction)clear:(id)sender {
     
-    [YMNetworkHelper postWithApi:url params:nil callback:^(id responseObject, NSString *msg, NSError *error) {
-        
-    }];
-
+    self.dataArr = @[];
+    
+    [self.tableView reloadData];
 }
 
-/// 使用最原始YMNetwork
 - (void)loadData {
-    NSString *url = @"https://www.baidu.com";
     
-    [YMNetwork requestMethod:YMNetworkMethodGET url:url params:nil success:^(id responseObject) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.loading = NO;
-        });
-    } failure:^(NSError *error) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.loading = NO;
-        });
+    [YMNetworkHelper get:api_banners parameters:nil headers:nil success:^(id  _Nullable responseObject) {
+        self.loading = NO;
+        
+        self.dataArr = responseObject;
+        
+        [self.tableView reloadData];
+        
+    } failure:^(NSError * _Nonnull error) {
+        self.loading = NO;
+        self.dataArr = @[];
+        
+        [self.tableView reloadData];
     }];
-     
-     self.dataArr = @[@1,@1,@1,@1,@1];
-     [self.tableView reloadData];
 }
 
 
@@ -87,8 +66,7 @@ static NSString* EmptyImage = @"nothing";
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     self.loading = YES;
     
-    [self load2];
-//    [self loadData];
+    [self loadData];
 }
 
 #pragma mark - tableViewDelegate

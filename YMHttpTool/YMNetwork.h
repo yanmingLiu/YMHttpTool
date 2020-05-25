@@ -1,15 +1,3 @@
-/*
- *********************************************************************************
- *
- *
- * 本工具是对 PPNetworkHelper 的修改，除了GET POST添加工作中使用到的 : HEAD、PUT、DELETE、PATCH
- * 
- * PPNetworkHelper 的地址如下：
- * https://github.com/jkpang/PPNetworkHelper
- *
- * version: 1.0
- *********************************************************************************
- */
 
 //-------------------打印日志-------------------------
 //DEBUG  模式下打印日志
@@ -22,17 +10,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "YMNetworkCache.h"
 
+#import "AFNetworking.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 ///  HTTP Request method.
-typedef NS_ENUM(NSInteger, YMNetworkMethod) {
-    YMNetworkMethodGET,
-    YMNetworkMethodPOST,
-    YMNetworkMethodHEAD,
-    YMNetworkMethodPUT,
-    YMNetworkMethodDELETE,
-    YMNetworkMethodPATCH,
+typedef NS_ENUM(NSInteger, YMHTTPMethod) {
+    YMHTTPMethodGET,
+    YMHTTPMethodPOST,
+    YMHTTPMethodHEAD,
+    YMHTTPMethodPUT,
+    YMHTTPMethodDELETE,
+    YMHTTPMethodPATCH,
 };
 
 typedef NS_ENUM(NSUInteger, YMRequestSerializer) {
@@ -49,33 +39,12 @@ typedef NS_ENUM(NSUInteger, YMResponseSerializer) {
     YMResponseSerializerHTTP,
 };
 
-
-/// 请求成功的Block
-typedef void(^YMRequestSuccess)(id responseObject);
-
-/// 请求失败的Block
-typedef void(^YMRequestFailed)(NSError *error);
-
-/// 缓存的Block
-typedef void(^YMRequestCache)(id responseCache);
-
-/// 上传或者下载的进度, Progress.completedUnitCount:当前大小 - Progress.totalUnitCount:总大小
-typedef void (^YMRequestProgress)(NSProgress *progress);
-
-
 @class AFHTTPSessionManager;
+
 @interface YMNetwork : NSObject
 
-#pragma mark - 开始监听网络
-
-/// 有网YES, 无网:NO
-+ (BOOL)isNetwork;
-
-/// 手机网络:YES, 反之:NO
-+ (BOOL)isWWANNetwork;
-
-/// WiFi网络:YES, 反之:NO
-+ (BOOL)isWiFiNetwork;
+/// 网络监听
++ (void)reachabilityStatusChangeBlock:(nullable void (^)(AFNetworkReachabilityStatus status))block;
 
 /// 取消所有HTTP请求
 + (void)cancelAllRequest;
@@ -90,45 +59,22 @@ typedef void (^YMRequestProgress)(NSProgress *progress);
 + (void)closeLog;
 
 
-/**
- * 无缓存请求
- * @param method 请求方式
- */
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method url:(NSString *)urlStr params:(id)params success:(YMRequestSuccess)success failure:(YMRequestFailed)failure;
+/// 发起网络请求
+/// @param method 请求方式
+/// @param URLString 地址
+/// @param parameters 参数
+/// @param headers 请求头
+/// @param progress 进度
+/// @param success 成功回调
+/// @param failure 失败回调
++ (nullable NSURLSessionDataTask *)requestWithMethod:(YMHTTPMethod)method
+                                           URLString:(NSString *)URLString
+                                          parameters:(nullable id)parameters
+                                             headers:(nullable NSDictionary <NSString *, NSString *> *)headers
+                                            progress:(nullable void (^)(NSProgress *progress))progress
+                                             success:(nullable void (^)(id _Nullable responseObject))success
+                                             failure:(nullable void (^)(NSError *error))failure;
 
-/**
- *  请求,自动缓存
- *  @return 返回的对象可取消请求,调用cancel方法
- */
-+ (NSURLSessionTask *)requestMethod:(YMNetworkMethod)method url:(NSString *)urlStr params:(id)params responseCache:(YMRequestCache)responseCache success:(YMRequestSuccess)success failure:(YMRequestFailed)failure;
-
-
-/**
- *  上传单/多张图片
- *
- *  @param URL        请求地址
- *  @param parameters 请求参数
- *  @param name       图片对应服务器上的字段
- *  @param images     图片数组
- *  @param fileNames  图片文件名数组, 可以为nil, 数组内的文件名默认为当前日期时间"yyyyMMddHHmmss"
- *  @param imageScale 图片文件压缩比 范围 (0.f ~ 1.f)
- *  @param imageType  图片文件的类型,例:png、jpg(默认类型)....
- *  @param progress   上传进度信息
- *  @param success    请求成功的回调
- *  @param failure    请求失败的回调
- *
- *  @return 返回的对象可取消请求,调用cancel方法
- */
-+ ( NSURLSessionTask *)uploadImagesWithURL:(NSString *)URL
-                                        parameters:(id)parameters
-                                              name:(NSString *)name
-                                            images:(NSArray<UIImage *> *)images
-                                         fileNames:(NSArray<NSString *> *)fileNames
-                                        imageScale:(CGFloat)imageScale
-                                         imageType:(NSString *)imageType
-                                          progress:(YMRequestProgress)progress
-                                           success:(YMRequestSuccess)success
-                                           failure:(YMRequestFailed)failure;
 
 /**
  *  下载文件
@@ -142,10 +88,10 @@ typedef void (^YMRequestProgress)(NSProgress *progress);
  *  @return 返回NSURLSessionDownloadTask实例，可用于暂停继续，暂停调用suspend方法，开始下载调用resume方法
  */
 + (NSURLSessionTask *)downloadWithURL:(NSString *)URL
-                                       fileDir:(NSString *)fileDir
-                                      progress:(YMRequestProgress)progress
-                                       success:(void(^)(NSString *filePath))success
-                                       failure:(YMRequestFailed)failure;
+                              fileDir:(NSString *)fileDir
+                             progress:(nullable void (^)(NSProgress *progress))progress
+                              success:(void(^)(NSString *filePath))success
+                              failure:(nullable void (^)(NSError *error))failure;
 
 
 
@@ -161,10 +107,11 @@ typedef void (^YMRequestProgress)(NSProgress *progress);
 /// 设置服务器响应数据格式:默认为JSON格式
 + (void)setResponseSerializer:(YMResponseSerializer)responseSerializer;
 
+/// 设置服务器响应时间 默认30s
++ (void)setTimeoutInterval:(NSTimeInterval)timeoutInterval;
 
 /// 设置请求头
 + (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
-
 
 /**
  配置自建证书的Https请求, 参考链接: http://blog.csdn.net/syg90178aw/article/details/52839103
@@ -179,3 +126,8 @@ typedef void (^YMRequestProgress)(NSProgress *progress);
 @end
 
 
+@interface NSError (AFNError)
++ (NSError *)returnErrorWithError:(NSError *)error;
+@end
+
+NS_ASSUME_NONNULL_END

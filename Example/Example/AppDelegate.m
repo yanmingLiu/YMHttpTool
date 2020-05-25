@@ -22,9 +22,40 @@
     // Override point for customization after application launch.
     
     // 开启网络监听
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    //1:创建网络监听者
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager manager];
+    //2:获取网络状态
+    /*
+     AFNetworkReachabilityStatusUnknown          = 未知网络，
+     AFNetworkReachabilityStatusNotReachable     = 没有联网
+     AFNetworkReachabilityStatusReachableViaWWAN = 蜂窝数据
+     AFNetworkReachabilityStatusReachableViaWiFi = 无线网
+     */
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"未知网络");
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"没有联网");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"蜂窝数据");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"无线网");
+                break;
+            default:
+                break;
+        }
+    }];
+    
+    //开启网络监听
+    [manager startMonitoring];
+    
     return YES;
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

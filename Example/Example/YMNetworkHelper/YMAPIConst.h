@@ -24,20 +24,12 @@ extern NSString *const AMapAPIKey;
 /** IMkey */ 
 extern NSString *const IMAPPKey;
 
-#pragma mark - 公共接口地址
 
-/** 注册 */ 
-extern NSString * const url_register;
+@end
 
-/** 登录 */ 
-extern NSString * const url_login;
+
 
 #pragma mark - 业务接口地址
 
-//关键词
-extern NSString * const url_home_keywords;
-
-
-
-
-@end
+// banner轮播
+static NSString * const api_banners = @"/banners";
