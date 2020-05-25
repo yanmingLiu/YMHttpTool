@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
   s.name         = "YMHttpTool"
 
-  s.version      = "1.1"
+  s.version      = "1.1.1"
 
   s.summary      = "AFNetworking 4.x封装的网络工具"
 
