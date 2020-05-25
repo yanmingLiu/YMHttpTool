@@ -7,9 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "AFNetworkActivityIndicatorManager.h"
-#import "AFNetworking.h"
-
+#import "YMNetwork.h"
 
 @interface AppDelegate ()
 
@@ -19,39 +17,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    // 开启网络监听
-    //1:创建网络监听者
-    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager manager];
-    //2:获取网络状态
-    /*
-     AFNetworkReachabilityStatusUnknown          = 未知网络，
-     AFNetworkReachabilityStatusNotReachable     = 没有联网
-     AFNetworkReachabilityStatusReachableViaWWAN = 蜂窝数据
-     AFNetworkReachabilityStatusReachableViaWiFi = 无线网
-     */
-    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        switch (status) {
-            case AFNetworkReachabilityStatusUnknown:
-                NSLog(@"未知网络");
-                break;
-            case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"没有联网");
-                break;
-            case AFNetworkReachabilityStatusReachableViaWWAN:
-                NSLog(@"蜂窝数据");
-                break;
-            case AFNetworkReachabilityStatusReachableViaWiFi:
-                NSLog(@"无线网");
-                break;
-            default:
-                break;
-        }
+
+    [YMNetwork reachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
     }];
-    
-    //开启网络监听
-    [manager startMonitoring];
+
     
     return YES;
 }

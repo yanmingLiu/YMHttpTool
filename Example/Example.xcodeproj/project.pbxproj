@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8D501C4F247B77CF0055FF46 /* YMHttpTool.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8D501C4E247B77CF0055FF46 /* YMHttpTool.podspec */; };
-		8D501C51247B77D70055FF46 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D501C50247B77D70055FF46 /* README.md */; };
-		8D501C53247B77DE0055FF46 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8D501C52247B77DE0055FF46 /* LICENSE */; };
 		C20EE5F91FCE842600B0810C /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C20EE5F71FCE842600B0810C /* UIScrollView+EmptyDataSet.m */; };
 		C20EE5FC1FCE8DD700B0810C /* YMBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C20EE5FB1FCE8DD700B0810C /* YMBaseTableViewController.m */; };
 		C2611C551FCD8A370052DDD1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2611C541FCD8A370052DDD1 /* AppDelegate.m */; };
@@ -41,9 +38,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8D501C4E247B77CF0055FF46 /* YMHttpTool.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = YMHttpTool.podspec; path = ../YMHttpTool.podspec; sourceTree = "<group>"; };
-		8D501C50247B77D70055FF46 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		8D501C52247B77DE0055FF46 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C20EE5F71FCE842600B0810C /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		C20EE5F81FCE842600B0810C /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		C20EE5FA1FCE8DD700B0810C /* YMBaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YMBaseTableViewController.h; sourceTree = "<group>"; };
@@ -143,9 +137,6 @@
 		C2611C471FCD8A370052DDD1 = {
 			isa = PBXGroup;
 			children = (
-				8D501C52247B77DE0055FF46 /* LICENSE */,
-				8D501C50247B77D70055FF46 /* README.md */,
-				8D501C4E247B77CF0055FF46 /* YMHttpTool.podspec */,
 				C2611C521FCD8A370052DDD1 /* Example */,
 				C2611C511FCD8A370052DDD1 /* Products */,
 			);
@@ -327,11 +318,8 @@
 			files = (
 				C2611CE91FCDAE4C0052DDD1 /* LICENSE in Resources */,
 				C2611C601FCD8A370052DDD1 /* LaunchScreen.storyboard in Resources */,
-				8D501C53247B77DE0055FF46 /* LICENSE in Resources */,
 				C2611CEA1FCDAE4C0052DDD1 /* README.mdown in Resources */,
-				8D501C51247B77D70055FF46 /* README.md in Resources */,
 				C2611C5D1FCD8A370052DDD1 /* Assets.xcassets in Resources */,
-				8D501C4F247B77CF0055FF46 /* YMHttpTool.podspec in Resources */,
 				C2611C5B1FCD8A370052DDD1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

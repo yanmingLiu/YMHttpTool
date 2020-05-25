@@ -7,7 +7,7 @@
 //
 
 #import "YMNetwork.h"
-#import "AFNetworking.h"
+
 #import "AFNetworkActivityIndicatorManager.h"
 
 #define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
@@ -45,18 +45,6 @@ static BOOL _isOpenLog = YES;   // 是否已开启日志打印
     }];
     //开启网络监听
     [manager startMonitoring];
-}
-
-+ (BOOL)isNetwork {
-    return [AFNetworkReachabilityManager sharedManager].reachable;
-}
-
-+ (BOOL)isWWANNetwork {
-    return [AFNetworkReachabilityManager sharedManager].reachableViaWWAN;
-}
-
-+ (BOOL)isWiFiNetwork {
-    return [AFNetworkReachabilityManager sharedManager].reachableViaWiFi;
 }
 
 + (void)openLog {
